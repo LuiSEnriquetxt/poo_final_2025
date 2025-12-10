@@ -159,6 +159,13 @@ public class Main {
         accionesPanel.add(pagarBtn);
         accionesPanel.add(verChoferesBtn);
         accionesPanel.add(reseñaGeneralBtn);
+        /// ////eliminar carrito vbotonos///
+        JButton vaciarCarritoBtn = new JButton("Vaciar Carrito");
+        JButton eliminarItemBtn = new JButton("Eliminar Item");
+
+        accionesPanel.add(vaciarCarritoBtn);
+        accionesPanel.add(eliminarItemBtn);
+
 /// ////////////llama a la pantalla resñea 77777
         reseñaGeneralBtn.addActionListener(e -> mostrarVentanaReseñaGeneral());
 
@@ -216,6 +223,55 @@ public class Main {
                     .append(" = ").append(item.getSubtotal()).append("\n"));
             JOptionPane.showMessageDialog(frame, sb.toString());
         });
+        vaciarCarritoBtn.addActionListener(e -> {
+            if (carrito.getItems().isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "El carrito ya está vacío");
+                return;
+            }
+
+            int opc = JOptionPane.showConfirmDialog(
+                    frame,
+                    "¿Seguro que deseas vaciar todo el carrito?",
+                    "Confirmar",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (opc == JOptionPane.YES_OPTION) {
+                carrito.getItems().clear();
+                JOptionPane.showMessageDialog(frame, "Carrito vaciado");
+            }
+        });
+        eliminarItemBtn.addActionListener(e -> {
+            if (carrito.getItems().isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "El carrito está vacío");
+                return;
+            }
+
+            // Listar nombres para el diálogo
+            String[] nombres = carrito.getItems().stream()
+                    .map(item -> item.getProducto().getNombre())
+                    .toArray(String[]::new);
+
+            String seleccionado = (String) JOptionPane.showInputDialog(
+                    frame,
+                    "Selecciona el producto a eliminar:",
+                    "Eliminar Item",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    nombres,
+                    nombres[0]
+            );
+
+            if (seleccionado == null) return;
+
+            carrito.getItems().removeIf(item ->
+                    item.getProducto().getNombre().equals(seleccionado)
+            );
+
+            JOptionPane.showMessageDialog(frame, "Item eliminado");
+        });
+
+        /// ////////////////////////////
         pagarBtn.addActionListener(e -> {
             double total = carrito.calcularTotal();
             if(total == 0){
