@@ -1,0 +1,176 @@
+@startuml
+class poo.Usuario {
+# int id
+# String nombre
+# String email
+# String password
+# String tipo
++ <<Create>> Usuario(int,String,String,String,String)
++ int getId()
++ String getNombre()
++ String getEmail()
++ String getTipo()
++ String getPassword()
+}
+
+
+class poo.Cliente {
++ <<Create>> Cliente(int,String,String,String)
++ void verProductos()
+}
+
+class poo.ItemProducto {
+- Producto producto
+- int cantidad
++ <<Create>> ItemProducto(Producto,int)
++ Producto getProducto()
++ int getCantidad()
++ void setCantidad(int)
++ double getSubtotal()
+}
+
+
+class poo.Pago {
++ {static} void realizarPago(int,double)
+}
+
+class poo.DeliveryChoferDAO {
+- {static} Connection conectar()
++ {static} List<String> listarChoferes()
++ {static} void agregarChofer(String)
+}
+
+class poo.Producto {
+- int id
+- String nombre
+- String descripcion
+- BigDecimal precio
+- int stock
++ <<Create>> Producto(int,String,String,BigDecimal,int)
++ int getId()
++ String getNombre()
++ String getDescripcion()
++ BigDecimal getPrecio()
++ int getStock()
++ void setStock(int)
+}
+
+
+class poo.Carrito {
+- int id
+- int usuarioId
+- List<ItemProducto> items
++ <<Create>> Carrito(int,int)
++ <<Create>> Carrito(int)
++ void agregarProducto(ItemProducto)
++ void eliminarProducto(int)
++ double calcularTotal()
++ List<ItemProducto> getItems()
+}
+
+
+class poo.Biblioteca {
+- {static} List<Chofer> choferes
++ {static} List<Producto> listarProductos()
++ {static} List<Chofer> listarChoferes()
++ {static} void agregarChofer(Chofer)
++ {static} Chofer obtenerChoferDisponible()
++ {static} void actualizarStock(int,int)
+}
+
+
+class poo.Main {
+- {static} Administrador admin
+- {static} Cliente cliente
+- {static} Carrito carrito
++ {static} void main(String[])
+- {static} void mostrarLogin()
+- {static} void mostrarPanelAdmin()
+- {static} void mostrarPanelCliente()
++ void mostrarPanelAgregarChofer()
+- {static} void mostrarVentanaReseñaGeneral()
+}
+
+
+class poo.Chofer {
+- int id
+- String nombre
+- boolean disponible
++ <<Create>> Chofer(int,String)
++ int getId()
++ String getNombre()
++ boolean isDisponible()
++ void setDisponible(boolean)
+}
+
+
+class poo.Administrador {
++ <<Create>> Administrador(int,String,String,String)
++ void agregarProducto(Producto)
++ void eliminarProducto(int)
+}
+
+class poo.Conexion {
+- {static} String URL
+- {static} String USER
+- {static} String PASSWORD
++ {static} Connection getConnection()
+}
+
+
+class poo.DeliveryChofer {
+- int id
+- String nombre
+- boolean disponibilidad
++ <<Create>> DeliveryChofer(int,String,boolean)
++ int getId()
++ String getNombre()
++ boolean isDisponible()
++ {static} void listarChoferes()
++ {static} void asignarChofer(int,boolean)
++ {static} void agregarChofer(String)
++ {static} String listarChoferesTexto()
++ {static} String obtenerChoferesComoTexto()
++ {static} DeliveryChofer obtenerChoferDisponible()
++ {static} void cambiarDisponibilidad(int,boolean)
+}
+
+
+class poo.Reseña {
++ {static} void agregarReseña(int,int,String,int)
+}
+
+
+' ===== HERENCIA =====
+poo.Usuario <|-- poo.Cliente
+poo.Usuario <|-- poo.Administrador
+
+' ===== AGREGACIÓN Y COMPOSICIÓN =====
+poo.Carrito o-- "0..*" poo.ItemProducto
+poo.ItemProducto *-- poo.Producto
+
+' ===== USO / DEPENDENCIAS =====
+poo.Cliente ..> poo.Producto
+poo.Administrador ..> poo.Producto
+
+poo.Biblioteca ..> poo.Producto
+poo.Biblioteca ..> poo.Chofer
+
+poo.DeliveryChoferDAO ..> poo.Conexion
+
+poo.Pago ..> poo.Carrito
+
+poo.Reseña ..> poo.Producto
+poo.Reseña ..> poo.Cliente
+
+poo.Main ..> poo.Usuario
+poo.Main ..> poo.Cliente
+poo.Main ..> poo.Administrador
+poo.Main ..> poo.Carrito
+poo.Main ..> poo.Producto
+poo.Main ..> poo.Chofer
+poo.Main ..> poo.DeliveryChoferDAO
+poo.Main ..> poo.Reseña
+poo.Main ..> poo.Pago
+
+@enduml

@@ -1,0 +1,138 @@
+@startuml
+class poo.Usuario {
+# int id
+# String nombre
+# String email
+# String password
+# String tipo
++ int getId()
++ String getNombre()
++ String getEmail()
++ String getTipo()
++ String getPassword()
+}
+
+
+class poo.Cliente {
++ void verProductos()
+}
+
+class poo.ItemProducto {
+- Producto producto
+- int cantidad
++ Producto getProducto()
++ int getCantidad()
++ void setCantidad(int)
++ double getSubtotal()
+}
+
+
+class poo.Pago {
++ {static} void realizarPago(int,double)
+}
+
+class poo.DeliveryChoferDAO {
+- {static} Connection conectar()
++ {static} List<String> listarChoferes()
++ {static} void agregarChofer(String)
+}
+
+class poo.Producto {
+- int id
+- String nombre
+- String descripcion
+- BigDecimal precio
+- int stock
++ int getId()
++ String getNombre()
++ String getDescripcion()
++ BigDecimal getPrecio()
++ int getStock()
++ void setStock(int)
+}
+
+
+class poo.Carrito {
+- int id
+- int usuarioId
+- List<ItemProducto> items
++ void agregarProducto(ItemProducto)
++ void eliminarProducto(int)
++ double calcularTotal()
++ List<ItemProducto> getItems()
+}
+
+
+class poo.Biblioteca {
+- {static} List<Chofer> choferes
++ {static} List<Producto> listarProductos()
++ {static} List<Chofer> listarChoferes()
++ {static} void agregarChofer(Chofer)
++ {static} Chofer obtenerChoferDisponible()
++ {static} void actualizarStock(int,int)
+}
+
+
+class poo.Main {
+- {static} Administrador admin
+- {static} Cliente cliente
+- {static} Carrito carrito
++ {static} void main(String[])
+- {static} void mostrarLogin()
+- {static} void mostrarPanelAdmin()
+- {static} void mostrarPanelCliente()
++ void mostrarPanelAgregarChofer()
+- {static} void mostrarVentanaReseñaGeneral()
+}
+
+
+class poo.Chofer {
+- int id
+- String nombre
+- boolean disponible
++ int getId()
++ String getNombre()
++ boolean isDisponible()
++ void setDisponible(boolean)
+}
+
+
+class poo.Administrador {
++ void agregarProducto(Producto)
++ void eliminarProducto(int)
+}
+
+class poo.Conexion {
+- {static} String URL
+- {static} String USER
+- {static} String PASSWORD
++ {static} Connection getConnection()
+}
+
+
+class poo.DeliveryChofer {
+- int id
+- String nombre
+- boolean disponibilidad
++ int getId()
++ String getNombre()
++ boolean isDisponible()
++ {static} void listarChoferes()
++ {static} void asignarChofer(int,boolean)
++ {static} void agregarChofer(String)
++ {static} String listarChoferesTexto()
++ {static} String obtenerChoferesComoTexto()
++ {static} DeliveryChofer obtenerChoferDisponible()
++ {static} void cambiarDisponibilidad(int,boolean)
+}
+
+
+class poo.Reseña {
++ {static} void agregarReseña(int,int,String,int)
+}
+
+
+
+poo.Usuario <|-- poo.Cliente
+poo.Usuario <|-- poo.Administrador
+@enduml
