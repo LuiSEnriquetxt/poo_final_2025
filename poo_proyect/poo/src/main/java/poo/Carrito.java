@@ -34,5 +34,19 @@ public class Carrito {
         this.usuarioId = usuarioId;
         this.items = new ArrayList<>();
     }
+    /// //vaciar carrito///////
+    public void vaciarCarrito() {
+        items.clear();
+        System.out.println("El carrito ha sido vaciado.");
+    }
+    public void eliminarItemPorIndice(int index) {
+        if (index >= 0 && index < items.size()) {
+            items.remove(index);
+            System.out.println("Ítem eliminado.");
+        } else {
+            System.out.println("Índice inválido.");
+        }
+    }
+
 
 }
