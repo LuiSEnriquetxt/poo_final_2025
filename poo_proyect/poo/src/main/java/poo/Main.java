@@ -125,7 +125,7 @@ public class Main {
         });
 
         frame.setVisible(true);
-        /// ////////
+        
         JButton agregarChoferBtn = new JButton("Agregar Chofer");
         frame.add(agregarChoferBtn);
 
