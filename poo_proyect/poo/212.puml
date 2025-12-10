@@ -66,6 +66,8 @@ class poo.Carrito {
 + void eliminarProducto(int)
 + double calcularTotal()
 + List<ItemProducto> getItems()
++ void vaciarCarrito()
++ void eliminarItemPorIndice(int)
 }
 
 
